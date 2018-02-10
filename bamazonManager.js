@@ -48,14 +48,27 @@ function viewProducts() {
         sql: 'SELECT * FROM `bamazon`'
     },
         function (err, res) {
-            console.log(' ');
+            console.log('\nAll Products:');
             for (var i = 0; i < res.length; i++) {
-                console.log('');
-                // console.log(res[i].item_id);
-                // console.log(res[i].product_name);
-                // console.log(res[i].price);
-                // console.log(res[i]);
+
                 console.log("item_id: " + res[i].item_id + " | product_name: " + res[i].product_name + " | department_name: " + res[i].department_name + " | price: " + res[i].price + " | stock_quantity: " + res[i].stock_quantity);
+            }
+            console.log(' ');
+            userPrompt();
+        }
+    );
+}
+
+function viewLowInv() {
+    connection.query({
+        sql: "SELECT * FROM bamazon HAVING stock_quantity < 100"
+    },
+        function (err, res) {
+            
+            console.log("\nLow Inventory:");
+            for (var i = 0; i < res.length; i++) {
+                
+                console.log("item_id: " + res[i].item_id + " | stock_quantity: " + res[i].stock_quantity);
             }
             console.log(' ');
             userPrompt();
