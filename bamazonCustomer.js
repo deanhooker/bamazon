@@ -1,6 +1,8 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 
+let itemsAvailable = [];
+
 const connection = mysql.createConnection({
     host: 'localhost',
     port: 8889,
@@ -26,9 +28,29 @@ function displayProducts() {
                 console.log(res[i].item_id);
                 console.log(res[i].product_name);
                 console.log(res[i].price);
+
+                itemsAvailable.push(res[i].item_id);
             }
             console.log(' ');
-            // userPrompt();
+            userPrompt();
         }
     );
+}
+
+function userPrompt() {
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "item",
+            message: "Which item would you like to purchase?",
+            choices: itemsAvailable
+        },
+        {
+            type: "input",
+            name: "quantity",
+            message: "How many would you like to buy?"
+        }
+    ]).then(function (user) {
+        console.log(user.item + " " + user.quantity);
+    })
 }
