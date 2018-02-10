@@ -51,6 +51,15 @@ function userPrompt() {
             message: "How many would you like to buy?"
         }
     ]).then(function (user) {
-        console.log(user.item + " " + user.quantity);
+        let isNumber = user.quantity;
+        if (isNaN(isNumber)) {
+            console.log("");
+            console.log("Please enter a number...");
+            console.log("");
+            userPrompt();
+        }
+        else {
+            console.log(user.item + " " + user.quantity);
+        }
     })
 }
