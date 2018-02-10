@@ -62,23 +62,61 @@ function userPrompt() {
         }
         else {
 
-            console.log(user.item + " " + user.quantity);
             connection.query({
                 sql: 'SELECT * FROM `bamazon` WHERE `item_id` = ?',
                 timeout: 40000, // 40s
                 values: [user.item]
             }, function (err, res) {
 
-                console.log(res[0].stock_quantity);
-                if (res[0].stock_quantity < user.quantity) {
+                let currentStock = res[0].stock_quantity;
+
+                if (currentStock < user.quantity) {
 
                     console.log("Sorry, not enough stock!!");
                     userPrompt();
                 }
                 else {
-                    console.log("Purchase complete");
+                    updateStock(user.item, user.quantity, currentStock);
+                    console.log("");
+                    console.log("Total purchase price: " + user.quantity * res[0].price);
+                    console.log("");
+                    anotherPurchase();
                 }
             })
+        }
+    })
+}
+
+function updateStock(item, boughtQuantity, currentStock) {
+    
+    let newQuantity = currentStock - boughtQuantity;
+    console.log("\n" + item);
+
+    var query = connection.query(
+        "UPDATE `bamazon` SET ? WHERE ?",
+        [
+            {
+                stock_quantity: newQuantity
+            },
+            {
+                item_id: item
+            }
+        ]
+    )
+}
+
+function anotherPurchase() {
+    inquirer.prompt([
+
+        {
+            type: "list",
+            name: "action",
+            message: "Would you like to make another purchase?",
+            choices: ["Yes", "No"]
+        }
+    ]).then(function (user) {
+        if (user.action === "Yes") {
+            userPrompt();
         }
     })
 }
