@@ -1,8 +1,11 @@
+//requirements
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 
+//create global array for inquirer purchase options
 let itemsAvailable = [];
 
+//create mysql connection
 const connection = mysql.createConnection({
     host: 'localhost',
     port: 8889,
@@ -17,12 +20,16 @@ connection.connect(function (err) {
     displayProducts();
 });
 
+//display all products available
 function displayProducts() {
+
     connection.query({
         sql: 'SELECT * FROM `bamazon`'
     },
         function (err, res) {
             console.log(' ');
+
+            //console log all products and push into the global array
             for (var i = 0; i < res.length; i++) {
                 console.log('');
                 console.log(res[i].item_id);
@@ -54,6 +61,7 @@ function userPrompt() {
 
         let userQuantity = user.quantity;
 
+        //validate user input is number
         if (isNaN(userQuantity)) {
             console.log("");
             console.log("Please enter a number...");
@@ -68,6 +76,7 @@ function userPrompt() {
                 values: [user.item]
             }, function (err, res) {
 
+                //store response stock as a variable
                 let currentStock = res[0].stock_quantity;
 
                 if (currentStock < user.quantity) {
@@ -87,6 +96,7 @@ function userPrompt() {
     })
 }
 
+//update stock in database
 function updateStock(item, boughtQuantity, currentStock) {
     
     let newQuantity = currentStock - boughtQuantity;
@@ -105,6 +115,7 @@ function updateStock(item, boughtQuantity, currentStock) {
     )
 }
 
+//ask user if they would like to make another purchase
 function anotherPurchase() {
     inquirer.prompt([
 
