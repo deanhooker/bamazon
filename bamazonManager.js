@@ -42,3 +42,23 @@ function userPrompt() {
         }
     })
 }
+
+function viewProducts() {
+    connection.query({
+        sql: 'SELECT * FROM `bamazon`'
+    },
+        function (err, res) {
+            console.log(' ');
+            for (var i = 0; i < res.length; i++) {
+                console.log('');
+                // console.log(res[i].item_id);
+                // console.log(res[i].product_name);
+                // console.log(res[i].price);
+                // console.log(res[i]);
+                console.log("item_id: " + res[i].item_id + " | product_name: " + res[i].product_name + " | department_name: " + res[i].department_name + " | price: " + res[i].price + " | stock_quantity: " + res[i].stock_quantity);
+            }
+            console.log(' ');
+            userPrompt();
+        }
+    );
+}
