@@ -4,10 +4,10 @@ CLI store using MySQL.
 
 ## bamazonCustomer
 
-![](gifs/bamazonCustomer.gif)
+![](gifs/bamazon-Customer.gif)
   
 ## bamazonManager
 
-<gif>
+![](gifs/bamazon-Manager.gif)
   
   
