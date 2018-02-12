@@ -2,11 +2,11 @@
 
 CLI store using MySQL.
 
-# bamazonCustomer
+## bamazonCustomer
 
-<gif>
+![](gifs/bamazonCustomer.gif)
   
-# bamazonManager
+## bamazonManager
 
 <gif>
   
