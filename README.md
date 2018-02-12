@@ -17,3 +17,15 @@ bamazonManager.js allows the user 4 options:
  - View Low Inventory
  - Add To Inventory
  - Add New Product
+
+**View Products for Sale**
+Shows user all products available in the database.
+
+**View Low Inventory**
+Shows user all products with stock below 100.
+
+**Add To Inventoy**
+Allows user to add stock to the product they choose.
+
+**Add New Product**
+Allows user to create an entirely new product to add to the database.
