@@ -24,7 +24,7 @@ Shows user all products available in the database.
 **View Low Inventory**
 Shows user all products with stock below 100.
 
-**Add To Inventoy**
+**Add To Inventory**
 Allows user to add stock to the product they choose.
 
 **Add New Product**
