@@ -99,12 +99,8 @@ function addToInv() {
 
             //create options for inquirer and an array that couples item_id with stock_quantity for update 
             for (var i = 0; i < res.length; i++) {
-                itemObject = {
-                    item_id: res[i].item_id,
-                    stock_quantity: res[i].stock_quantity
-                }
+
                 itemsAvailable.push(res[i].item_id);
-                itemsAvailableObject.push(itemObject);
             }
 
             inquirer.prompt([
@@ -122,7 +118,7 @@ function addToInv() {
             ]).then(function (user) {
 
                 let userQuantity = user.quantity;
-                
+
 
                 //validate user input is number
                 if (isNaN(userQuantity)) {
@@ -131,27 +127,34 @@ function addToInv() {
                     console.log("");
                     addToInv();
                 }
-        //         else {
-        //             console.log("this is working");
-        //             var query = connection.query(
-        //                 "UPDATE `bamazon` SET ? WHERE ?",
-        //                 [
-        //                     {
-        //                         stock_quantity: newQuantity
-        //                     },
-        //                     {
-        //                         item_id: item
-        //                     }
-        //                 ]
-        //             )
-        //         }
-        //     })
+                else {
+                    //query to return current stock for chosen item, then query to update stock
+                    connection.query({
+                        sql: 'SELECT stock_quantity FROM `bamazon` WHERE `item_id` = ?',
+                        timeout: 40000, // 40s
+                        values: [user.item]
+                    }, function (err, res) {
 
-        // }
+                        let userQuantityNumber = Number(userQuantity);
+                        let newQuantity = res[0].stock_quantity + userQuantityNumber;
+                        
+                        var query = connection.query(
+                            "UPDATE `bamazon` SET ? WHERE ?",
+                            [
+                                {
+                                    stock_quantity: newQuantity
+                                },
+                                {
+                                    item_id: user.item
+                                }
+                            ]
+                        )
+                        console.log("\nStock successfully updated!\n");
+
+                        userPrompt();
+                    })
+                }
+            })
+        }
     );
-
-
-
-
-
 }
