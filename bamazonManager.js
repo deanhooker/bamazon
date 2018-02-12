@@ -137,7 +137,7 @@ function addToInv() {
 
                         let userQuantityNumber = Number(userQuantity);
                         let newQuantity = res[0].stock_quantity + userQuantityNumber;
-                        
+
                         var query = connection.query(
                             "UPDATE `bamazon` SET ? WHERE ?",
                             [
@@ -157,4 +157,53 @@ function addToInv() {
             })
         }
     );
+}
+
+function addNew() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "newItem",
+            message: "You are creating a new product.\n  Please enter a unique item ID...",
+        },
+        {
+            type: "input",
+            name: "newProductName",
+            message: "Please enter the product name..."
+        },
+        {
+            type: "input",
+            name: "newDepartment",
+            message: "Please enter the department this item belongs to...",
+        },
+        {
+            type: "input",
+            name: "newPrice",
+            message: "Please enter the item's price...",
+        },
+        {
+            type: "input",
+            name: "newQuantity",
+            message: "How much stock is on hand...",
+        }
+    ]).then(function (user) {
+
+        connection.query(
+            "INSERT INTO bamazon SET ?",
+            {
+                item_id: user.newItem,
+                product_name: user.newProductName,
+                department_name: user.newDepartment,
+                price: user.newPrice,
+                stock_quantity: user.newQuantity
+            },
+            function (err) {
+                if (err) throw err;
+                else {
+                    console.log("\nItem successfully created!\n");
+                    userPrompt();
+                }
+            }
+        )
+    })
 }
