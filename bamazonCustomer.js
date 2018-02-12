@@ -81,7 +81,7 @@ function userPrompt() {
 
                 if (currentStock < user.quantity) {
 
-                    console.log("Sorry, not enough stock!!");
+                    console.log("\nSorry, not enough stock!!\n");
                     userPrompt();
                 }
                 else {
