@@ -13,7 +13,7 @@ bamazonCustomer.js displays all items available, then allows the user to make a 
 ![](gifs/bamazon-Manager.gif)
   
 bamazonManager.js allows the user 4 options:
- -View Products for Sale
- -View Low Inventory
- -Add To Inventory
- -Add New Product
+ - View Products for Sale
+ - View Low Inventory
+ - Add To Inventory
+ - Add New Product
